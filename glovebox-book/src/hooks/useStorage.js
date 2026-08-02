@@ -9,4 +9,14 @@ export function useStorage(key, fallback) {
             return fallback
         }
     })
+
+    const set = useCallback((next) => {
+        const v = typeof next === 'function' ? next(value) : next
+        setValue(v)
+        try {
+            localStorage.setItem(key, JSON.stringify(v))
+        } catch {}
+    }, [key, value])
+
+    return [value, set]
 }
