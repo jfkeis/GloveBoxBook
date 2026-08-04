@@ -2,6 +2,7 @@ import React from 'react'
 import { StatCard } from './components/StatCard'
 import { LogRow } from './components/LogRow'
 import { ReminderRow } from './components/ReminderRow'
+import { Modal } from './components/Modal'
 
 export default function App() {
   return (
@@ -23,8 +24,9 @@ export default function App() {
         onEdit={() => {}}
         onDelete={() => {}}
       />
+      <Modal title="Test Modal" onClose={() => {}}>
+        <p>Hello from inside the modal</p>
+      </Modal>
     </div>
-
-    
   )
 }
