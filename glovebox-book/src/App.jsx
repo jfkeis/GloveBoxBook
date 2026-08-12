@@ -3,8 +3,16 @@ import { StatCard } from './components/StatCard'
 import { LogRow } from './components/LogRow'
 import { ReminderRow } from './components/ReminderRow'
 import { Modal } from './components/Modal'
+import { LogForm } from './components/forms/LogForm'
+import { useState } from 'react'
 
 export default function App() {
+    const [logType, setLogType] = useState('fillup')
+    const [form, setForm] = useState({ date: '2026-01-15' })
+
+    function handleFormChange(field, value) {
+      setForm(prev => ({ ...prev, [field]: value }))
+    }
   return (
     <div>
       <StatCard label="Current mileage" value="28,500 mi" />
@@ -24,8 +32,18 @@ export default function App() {
         onEdit={() => {}}
         onDelete={() => {}}
       />
-      <Modal title="Test Modal" onClose={() => {}}>
-        <p>Hello from inside the modal</p>
+      <Modal title="Add Log" onClose={() => {}}>
+        <LogForm
+          logType={logType}
+          onLogTypeChange={setLogType}
+          form={form}
+          onFormChange={handleFormChange}
+          onSave={() => {}}
+          onCancel={() => {}}
+          du="mi"
+          vu="gal"
+          cu="USD"
+        />
       </Modal>
     </div>
   )
