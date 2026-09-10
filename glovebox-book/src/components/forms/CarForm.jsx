@@ -52,9 +52,9 @@ export function CarForm({ form, onFormChange, onSave, onCancel}) {
 
             <label>Color</label>
             <input
-            type="color"
-            value={form.color || '#2563eb'}
-            onChange={e => onFormChange('color', e.target.value)}
+                type="color"
+                value={form.color || '#2563eb'}
+                onChange={e => onFormChange('color', e.target.value)}
             />
 
             {/* Save/Cancel */}

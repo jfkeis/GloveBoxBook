@@ -32,3 +32,13 @@ export function round(value, decimals) {
     }
     return value.toFixed(decimals)
 }
+export function displayCost(usd, curUnit) {
+  const value = curUnit === 'EUR' ? usdToEur(usd) : usd
+  const symbol = curUnit === 'EUR' ? '€' : '$'
+  return `${symbol}${round(value, 2)}`
+}
+
+export function displayVolume(gal, volUnit) {
+  const value = volUnit === 'L' ? galToL(gal) : gal
+  return `${round(value, volUnit === 'L' ? 2 : 3)} ${volUnit}`
+}

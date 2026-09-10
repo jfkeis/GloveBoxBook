@@ -5,6 +5,7 @@ import { ReminderRow } from './components/ReminderRow'
 import { Modal } from './components/Modal'
 import { LogForm } from './components/forms/LogForm'
 import { useState } from 'react'
+import { CarInfo } from './components/CarInfo'
 
 export default function App() {
     const [logType, setLogType] = useState('fillup')
@@ -15,6 +16,11 @@ export default function App() {
     }
   return (
     <div>
+      <CarInfo
+        car={{ name: 'My Car', make: 'Honda', model: 'Civic', year: 2019, curUnit: 'USD', volUnit: 'gal' }}
+        logs={[]}
+        onEditCar={() => {}}
+      />
       <StatCard label="Current mileage" value="28,500 mi" />
       <StatCard label="Total fuel cost" value="$340.00" />
       <StatCard label="Avg. efficiency" value="32.4 MPG" />
