@@ -3,6 +3,7 @@ import { StatCard } from './StatCard'
 import { LogRow } from './LogRow'
 import { ReminderRow } from './ReminderRow'
 import { displayCost, displayVolume } from '../utils/units'
+import { remStatus } from '../utils/reminders'
 
 export function Dashboard({ car, logs, reminders, du, vu, cu, onAddLog, onEditLog, onDeleteLog, onAddReminder, onEditReminder, onDeleteReminder }) {
 
@@ -24,5 +25,14 @@ export function Dashboard({ car, logs, reminders, du, vu, cu, onAddLog, onEditLo
     const totalMaintenanceCost = maintenanceItems
         .reduce((sum, l) => sum+ (l.usdStored || 0), 0)
 
+    const recentLogs = logs
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .slice(0, 5)
+    
+    const upcomingReminders = reminders.slice(0, 3)
 
+    <button onClick={() => onAddLog('fillup')}>⛽ Fill-up</button>
+    <button onClick={() => onAddLog('oilchange')}>🔧 Oil Change</button>
+    <button onClick={() => onAddLog('oiladd')}>🛢️ Oil Added</button>
+    <button onClick={() => onAddLog('maintenance')}>🔩 Maintenance</button>
 }

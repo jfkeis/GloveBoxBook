@@ -42,3 +42,8 @@ export function displayVolume(gal, volUnit) {
   const value = volUnit === 'L' ? galToL(gal) : gal
   return `${round(value, volUnit === 'L' ? 2 : 3)} ${volUnit}`
 }
+
+export function displayEfficiency(mpg) {
+  if (mpg == null) return '—'
+  return round(mpg, 1) + ' MPG'
+}
