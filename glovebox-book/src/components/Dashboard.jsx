@@ -31,8 +31,56 @@ export function Dashboard({ car, logs, reminders, du, vu, cu, onAddLog, onEditLo
     
     const upcomingReminders = reminders.slice(0, 3)
 
-    <button onClick={() => onAddLog('fillup')}>⛽ Fill-up</button>
-    <button onClick={() => onAddLog('oilchange')}>🔧 Oil Change</button>
-    <button onClick={() => onAddLog('oiladd')}>🛢️ Oil Added</button>
-    <button onClick={() => onAddLog('maintenance')}>🔩 Maintenance</button>
+    return (
+        <div>
+            {/* Stat cards */}
+            <div>
+                <StatCard label="Current mileage" value={latestMi ? latestMi.toLocaleString() + ' ' + du : '—'} />
+                <StatCard label="Avg efficiency" value={avgEfficiency ? avgEfficiency.toFixed(1) + ' MPG' : '—'} />
+                <StatCard label="Total fuel cost" value={displayCost(totalFuelCost, cu)} />
+                <StatCard label="Maintenance cost" value={displayCost(totalMaintenanceCost, cu)} />
+            </div>
+
+            {/* Quick add */}
+            <div>
+                <button onClick={() => onAddLog('fillup')}>⛽ Fill-up</button>
+                <button onClick={() => onAddLog('oilchange')}>🔧 Oil Change</button>
+                <button onClick={() => onAddLog('oiladd')}>🛢️ Oil Added</button>
+                <button onClick={() => onAddLog('maintenance')}>🔩 Maintenance</button>
+            </div>
+
+            {/* Recent logs */}
+            <div>
+                <p>Recent activity</p>
+                {recentLogs.length === 0 && <p>No entries yet.</p>}
+                {recentLogs.map(log => (
+                    <LogRow
+                        key={log.id}
+                        log={log}
+                        du={du}
+                        vu={vu}
+                        onEdit={() => onEditLog(log)}
+                        onDelete={() => onDeleteLog(log.id)}
+                    />
+                ))}
+            </div>
+
+            {/* Upcoming reminders */}
+            <div>
+                <p>Upcoming reminders</p>
+                {upcomingReminders.length === 0 && <p>No reminders yet.</p>}
+                {upcomingReminders.map(r => (
+                    <ReminderRow
+                        key={r.id}
+                        reminder={r}
+                        status={remStatus(r, latestMi)}
+                        du={du}
+                        onEdit={() => onEditReminder(r)}
+                        onDelete={() => onDeleteReminder(r.id)}
+                    />
+                ))}
+            </div>
+        </div>
+    )
 }
+

@@ -1,56 +1,46 @@
 import React from 'react'
-import { StatCard } from './components/StatCard'
-import { LogRow } from './components/LogRow'
-import { ReminderRow } from './components/ReminderRow'
-import { Modal } from './components/Modal'
-import { LogForm } from './components/forms/LogForm'
-import { useState } from 'react'
-import { CarInfo } from './components/CarInfo'
+import { Dashboard } from './components/Dashboard'
+
+const testCar = {
+  id: 'car1',
+  name: 'My Car',
+  make: 'Honda',
+  model: 'Civic',
+  year: 2019,
+  distUnit: 'mi',
+  volUnit: 'gal',
+  curUnit: 'USD',
+  color: '#2563eb'
+}
+
+const testLogs = [
+  { id: '1', type: 'fillup', date: '2026-01-15', miStored: 28500, galStored: 11.2, usdStored: 68.00, mpg: 32.4 },
+  { id: '2', type: 'oilchange', date: '2026-01-10', miStored: 28200, usdStored: 85.00 },
+  { id: '3', type: 'maintenance', date: '2025-12-01', miStored: 27000, usdStored: 320.00, description: 'Brake pads replaced' },
+]
+
+const testReminders = [
+  { id: 'r1', name: 'Oil Change', intervalMi: 5000, lastMi: 27700 },
+  { id: 'r2', name: 'Tire Rotation', intervalMi: 7500, lastMi: 25000 },
+]
 
 export default function App() {
-    const [logType, setLogType] = useState('fillup')
-    const [form, setForm] = useState({ date: '2026-01-15' })
-
-    function handleFormChange(field, value) {
-      setForm(prev => ({ ...prev, [field]: value }))
-    }
   return (
     <div>
-      <CarInfo
-        car={{ name: 'My Car', make: 'Honda', model: 'Civic', year: 2019, curUnit: 'USD', volUnit: 'gal' }}
-        logs={[]}
-        onEditCar={() => {}}
+      <Dashboard
+        car={testCar}
+        logs={testLogs}
+        reminders={testReminders}
+        du={testCar.distUnit}
+        vu={testCar.volUnit}
+        cu={testCar.curUnit}
+        onAddLog={() => {}}
+        onEditLog={() => {}}
+        onDeleteLog={() => {}}
+        onAddReminder={() => {}}
+        onEditReminder={() => {}}
+        onDeleteReminder={() => {}}
       />
-      <StatCard label="Current mileage" value="28,500 mi" />
-      <StatCard label="Total fuel cost" value="$340.00" />
-      <StatCard label="Avg. efficiency" value="32.4 MPG" />
-      <LogRow
-          log={{ type: 'fillup', date: '2026-01-15', miStored: 28500, mpg: 32.4, galStored: 11.2 }}
-          onEdit={() => {}}
-          onDelete={() => {}}
-          du="mi"
-          vu="gal"
-      />
-      <ReminderRow
-        reminder={{ name: 'Oil Change', intervalMi: 5000, lastMi: 27700 }}
-        status={{ distLeft: 800, daysLeft: null, urgent: true, overdue: false }}
-        du="mi"
-        onEdit={() => {}}
-        onDelete={() => {}}
-      />
-      <Modal title="Add Log" onClose={() => {}}>
-        <LogForm
-          logType={logType}
-          onLogTypeChange={setLogType}
-          form={form}
-          onFormChange={handleFormChange}
-          onSave={() => {}}
-          onCancel={() => {}}
-          du="mi"
-          vu="gal"
-          cu="USD"
-        />
-      </Modal>
     </div>
   )
 }

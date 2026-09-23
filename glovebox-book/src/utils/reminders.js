@@ -1,4 +1,4 @@
-function remStatus(reminder, latestMi) {
+export function remStatus(reminder, latestMi) {
     let distLeft = null
     let daysLeft = null
 
