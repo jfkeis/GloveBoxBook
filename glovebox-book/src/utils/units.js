@@ -26,6 +26,18 @@ export function eurToUsd(euros) {
     return euros/USD_PER_EUR
 }
 
+export function toMi(value, distUnit) {
+    return distUnit === 'km' ? kmToMi(Number(value)) : Number(value)
+}
+
+export function toGal(value, volUnit) {
+    return volUnit === 'L' ? lToGal(Number(value)) : Number(value)
+}
+
+export function toUSD(value, curUnit) {
+    return curUnit === 'EUR' ? eurToUsd(Number(value)) : Number(value)
+}
+
 export function round(value, decimals) {
     if (value == null || isNaN(value)) {
         return null
@@ -33,17 +45,17 @@ export function round(value, decimals) {
     return value.toFixed(decimals)
 }
 export function displayCost(usd, curUnit) {
-  const value = curUnit === 'EUR' ? usdToEur(usd) : usd
-  const symbol = curUnit === 'EUR' ? '€' : '$'
-  return `${symbol}${round(value, 2)}`
+    const value = curUnit === 'EUR' ? usdToEur(usd) : usd
+    const symbol = curUnit === 'EUR' ? '€' : '$'
+    return `${symbol}${round(value, 2)}`
 }
 
 export function displayVolume(gal, volUnit) {
-  const value = volUnit === 'L' ? galToL(gal) : gal
-  return `${round(value, volUnit === 'L' ? 2 : 3)} ${volUnit}`
+    const value = volUnit === 'L' ? galToL(gal) : gal
+    return `${round(value, volUnit === 'L' ? 2 : 3)} ${volUnit}`
 }
 
 export function displayEfficiency(mpg) {
-  if (mpg == null) return '—'
-  return round(mpg, 1) + ' MPG'
+    if (mpg == null) return '—'
+    return round(mpg, 1) + ' MPG'
 }
