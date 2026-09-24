@@ -4,6 +4,7 @@ import { LogRow } from './LogRow'
 import { ReminderRow } from './ReminderRow'
 import { displayCost, displayVolume } from '../utils/units'
 import { remStatus } from '../utils/reminders'
+import styles from './Dashboard.module.css'
 
 export function Dashboard({ car, logs, reminders, du, vu, cu, onAddLog, onEditLog, onDeleteLog, onAddReminder, onEditReminder, onDeleteReminder }) {
 
@@ -32,26 +33,30 @@ export function Dashboard({ car, logs, reminders, du, vu, cu, onAddLog, onEditLo
     const upcomingReminders = reminders.slice(0, 3)
 
     return (
-        <div>
+        <div className={styles.dashboard}>
             {/* Stat cards */}
-            <div>
-                <StatCard label="Current mileage" value={latestMi ? latestMi.toLocaleString() + ' ' + du : '—'} />
-                <StatCard label="Avg efficiency" value={avgEfficiency ? avgEfficiency.toFixed(1) + ' MPG' : '—'} />
-                <StatCard label="Total fuel cost" value={displayCost(totalFuelCost, cu)} />
-                <StatCard label="Maintenance cost" value={displayCost(totalMaintenanceCost, cu)} />
+            <div className={styles.statsGrid}>
+                <StatCard label="Current mileage" value={latestMi ? latestMi.toLocaleString() + ' ' + du : '—'} color="linear-gradient(135deg, #2468c8 0%, #1244aa 100%)" />
+                <StatCard label="Avg efficiency" value={avgEfficiency ? avgEfficiency.toFixed(1) + ' MPG' : '—'} color="linear-gradient(135deg, #1a9a44 0%, #127733 100%)" />
+                <StatCard label="Total fuel cost" value={displayCost(totalFuelCost, cu)} color="linear-gradient(135deg, #8844cc 0%, #6633aa 100%)" />
+                <StatCard label="Maintenance cost" value={displayCost(totalMaintenanceCost, cu)} color="linear-gradient(135deg, #cc6600 0%, #aa4400 100%)" />
             </div>
 
             {/* Quick add */}
-            <div>
-                <button onClick={() => onAddLog('fillup')}>⛽ Fill-up</button>
-                <button onClick={() => onAddLog('oilchange')}>🔧 Oil Change</button>
-                <button onClick={() => onAddLog('oiladd')}>🛢️ Oil Added</button>
-                <button onClick={() => onAddLog('maintenance')}>🔩 Maintenance</button>
+            <div className={styles.section}>
+                <p className={styles.sectionTitle}>Quick add</p>
+                <div className={styles.quickAdd}>
+                    <button className={styles.quickAddBtn} onClick={() => onAddLog('fillup')}>⛽ Fill-up</button>
+                    <button className={styles.quickAddBtn} onClick={() => onAddLog('oilchange')}>🔧 Oil Change</button>
+                    <button className={styles.quickAddBtn} onClick={() => onAddLog('oiladd')}>🛢️ Oil Added</button>
+                    <button className={styles.quickAddBtn} onClick={() => onAddLog('maintenance')}>🔩 Maintenance</button>
+                </div>
+                
             </div>
 
             {/* Recent logs */}
-            <div>
-                <p>Recent activity</p>
+            <div className={styles.section}>
+                <p className={styles.sectionTitle}>Recent activity</p>
                 {recentLogs.length === 0 && <p>No entries yet.</p>}
                 {recentLogs.map(log => (
                     <LogRow
@@ -66,8 +71,8 @@ export function Dashboard({ car, logs, reminders, du, vu, cu, onAddLog, onEditLo
             </div>
 
             {/* Upcoming reminders */}
-            <div>
-                <p>Upcoming reminders</p>
+            <div className={styles.section}>
+                <p className={styles.sectionTitle}>Upcoming reminders</p>
                 {upcomingReminders.length === 0 && <p>No reminders yet.</p>}
                 {upcomingReminders.map(r => (
                     <ReminderRow

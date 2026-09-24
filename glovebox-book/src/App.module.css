@@ -1,0 +1,46 @@
+.app {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 16px;
+}
+
+.carTabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 8px;
+    align-items: center;
+}
+
+.carTab {
+    padding: 5px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.carTabActive {
+    color: white;
+    border-color: transparent;
+}
+
+.navTabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.navTab {
+    padding: 5px 16px;
+    border-radius: var(--radius-sm);
+    text-transform: capitalize;
+    font-size: 13px;
+}
+
+.navTabActive {
+    background: linear-gradient(to bottom, #ffffff 0%, #eef2f6 50%, #dce3ea 100%);
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent);
+}

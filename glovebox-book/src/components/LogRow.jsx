@@ -1,4 +1,5 @@
 import { kmToMi, lToGal, round } from '../utils/units'
+import styles from './LogRow.module.css'
 
 const LOG_TYPES = {
   fillup:      { label: 'Fill-up',     icon: '⛽' },
@@ -37,16 +38,23 @@ export function LogRow({ log, onEdit, onDelete, du, vu }) { //du = distance unit
         : type.label
 
     return (
-        <div>
-            <span>{type.icon}</span>
-            <span>{title}</span>
-            {log.usdStored && <span>${log.usdStored.toFixed(2)}</span>}
-            <button onClick={onEdit}>Edit</button>
-            <button onClick={onDelete}>Delete</button>
-            <div>
-                <span>{displayDate}</span>
-                {displayMileage && <span>{displayMileage}</span>}
-                {displayEfficiency && <span>{displayEfficiency}</span>}
+        <div className={styles.row}>
+            <span className={styles.icon}>{type.icon}</span>
+            <div className={styles.content}>
+                <div className={styles.titleRow}>
+                    <span className={styles.title}>{title}</span>
+                    {log.usdStored && <span className={styles.cost}>${log.usdStored.toFixed(2)}</span>}
+                </div>
+                <div className={styles.detailsRow}>
+                    {displayDate && <span className={styles.detail}>{displayDate}</span>}
+                    {displayMileage && <span className={styles.detail}>{displayMileage}</span>}
+                    {displayEfficiency && <span className={styles.detail}>{displayEfficiency}</span>}
+                </div>
+            </div>
+        
+            <div className={styles.actions}>
+                <button className={styles.actionBtn} onClick={onEdit}>Edit</button>
+                <button className={`${styles.actionBtn} ${styles.actionBtnDelete}`} onClick={onDelete}>Delete</button>
             </div>
         </div>
     )

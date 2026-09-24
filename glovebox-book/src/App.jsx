@@ -9,6 +9,7 @@ import { LogForm } from './components/forms/LogForm'
 import { ReminderForm } from './components/forms/ReminderForm'
 import { CarForm } from './components/forms/CarForm'
 import { toMi, toGal, toUSD } from './utils/units'
+import styles from './App.module.css'
 
 const DEFAULT_CARS = [
     { id: 'car1', name: "Red Rocket", make: '', model: '', year: '', plate: '', distUnit: 'mi', volUnit: 'gal', curUnit: 'USD', color: '#99241c' },
@@ -47,9 +48,9 @@ export default function App() {
     const cu = car?.curUnit || 'USD'
 
     function saveLog() {
-        const miStored = logForm.distDisp ? toMi(logForm.distDisp, du) : undefined
-        const galStored = logForm.volDisp ? toGal(logForm.volDisp, vu) : undefined
-        const usdStored = logForm.costDisp ? toUSD(logForm.costDisp, cu) : undefined
+        const miStored = logForm.distDisp ? toMi(logForm.distDisp, logForm.distInputUnit || du) : undefined
+        const galStored = logForm.volDisp ? toGal(logForm.volDisp, logForm.volInputUnit || vu) : undefined
+        const usdStored = logForm.costDisp ? toUSD(logForm.costDisp, logForm.costInputUnit || cu) : undefined
 
         let mpg = null
         if (logType === 'fillup' && miStored && galStored) {
@@ -143,12 +144,14 @@ export default function App() {
     }
 
     return (
-        <div>
+        <div className={styles.app}>
+
             {/* Car tabs */}
-            <div>
+            <div className={styles.carTabs}>
                 {cars.map(c => (
                     <button
                         key={c.id}
+                        className={`${styles.carTab} ${activeCar === c.id ? styles.carTabActive : ''}`}
                         onClick={() => {
                             setActiveCar(c.id)
                             setActiveView('dashboard')
@@ -161,9 +164,13 @@ export default function App() {
             </div>
 
             {/* Nav tabs */}
-            <div>
+            <div className={styles.navTabs}>
                 {['dashboard', 'logs', 'reminders', 'carinfo'].map(v => (
-                    <button key={v} onClick={() => setActiveView(v)}>
+                    <button
+                        key={v}
+                        className={`${styles.navTab} ${activeView === v ? styles.navTabActive : ''}`}
+                        onClick={() => setActiveView(v)}
+                    >
                         {v}
                     </button>
                 ))}
@@ -275,10 +282,6 @@ export default function App() {
                         du={du}
                         vu={vu}
                         cu={cu}
-                        onChangeDu={(unit) => setCars(prev => prev.map(c => c.id === activeCar ? { ...c, distUnit: unit } : c))}
-                        onChangeVu={(unit) => setCars(prev => prev.map(c => c.id === activeCar ? { ...c, volUnit: unit } : c))}
-                        onChangeCu={(unit) => setCars(prev => prev.map(c => c.id === activeCar ? { ...c, curUnit: unit } : c))}
-
                     />
                 </Modal>
             )}
