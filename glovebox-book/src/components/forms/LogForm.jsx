@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const LOG_TYPES = {
   fillup:      { label: 'Fill-up',     icon: '⛽' },
@@ -8,6 +8,9 @@ const LOG_TYPES = {
 }
 
 export function LogForm({ logType, onLogTypeChange, form, onFormChange, onSave, onCancel, du, vu, cu }) {
+  const [inputDu, setInputDu] = useState(du)
+  const [inputVu, setInputVu] = useState(vu)
+  const [inputCu, setInputCu] = useState(cu)
   return (
     <div>
 
@@ -30,31 +33,49 @@ export function LogForm({ logType, onLogTypeChange, form, onFormChange, onSave, 
 
       {/* Mileage */}
       <div>
-        <label>Mileage ({du})</label>
+        <label>
+          Mileage 
+          <button onClick={() => setInputDu(inputDu === 'mi' ? 'km' : 'mi')}>{inputDu}</button>
+        </label>
         <input
           type="number"
           placeholder={du === 'mi' ? 'e.g. 28500' : 'e.g. 45800'}
           value={form.distDisp || ''}
-          onChange={e => onFormChange('distDisp', e.target.value)}
+          onChange={e => {
+            onFormChange('distDisp', e.target.value)
+            onFormChange('distInputUnit', inputDu)
+          }}
         />
       </div>
 
       {/* Fill-up fields */}
       {logType === 'fillup' && (
         <div>
-          <label>Volume ({vu})</label>
+          <label>
+            Volume 
+            <button onClick={() => setInputVu(inputVu === 'gal' ? 'L' : 'gal')}>{inputVu}</button>
+          </label>
           <input
             type="number"
             placeholder={vu === 'gal' ? 'e.g. 11.230' : 'e.g. 42.50'}
             value={form.volDisp || ''}
-            onChange={e => onFormChange('volDisp', e.target.value)}
+            onChange={e => {
+              onFormChange('volDisp', e.target.value)
+              onFormChange('volInputUnit', inputVu)
+            }}
           />
-          <label>Cost ({cu})</label>
+          <label>
+            Cost 
+            <button onClick={() => setInputCu(inputCu === 'USD' ? 'EUR' : 'USD')}>{inputCu}</button>
+          </label>
           <input
             type="number"
             placeholder="e.g. 68.00"
             value={form.costDisp || ''}
-            onChange={e => onFormChange('costDisp', e.target.value)}
+            onChange={e => {
+              onFormChange('costDisp', e.target.value)
+              onFormChange('costInputUnit', inputCu)
+            }}
           />
           <label>Station (optional)</label>
           <input

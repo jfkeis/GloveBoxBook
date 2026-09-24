@@ -275,6 +275,10 @@ export default function App() {
                         du={du}
                         vu={vu}
                         cu={cu}
+                        onChangeDu={(unit) => setCars(prev => prev.map(c => c.id === activeCar ? { ...c, distUnit: unit } : c))}
+                        onChangeVu={(unit) => setCars(prev => prev.map(c => c.id === activeCar ? { ...c, volUnit: unit } : c))}
+                        onChangeCu={(unit) => setCars(prev => prev.map(c => c.id === activeCar ? { ...c, curUnit: unit } : c))}
+
                     />
                 </Modal>
             )}
