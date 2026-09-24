@@ -141,4 +141,173 @@ export default function App() {
         setCarForm(newCar)
         setModal('car')
     }
+
+    return (
+        <div>
+            {/* Car tabs */}
+            <div>
+                {cars.map(c => (
+                    <button
+                        key={c.id}
+                        onClick={() => {
+                            setActiveCar(c.id)
+                            setActiveView('dashboard')
+                        }}
+                    >
+                        {c.name}
+                    </button>
+                ))}
+                <button onClick={addCar}>+ Add car</button>
+            </div>
+
+            {/* Nav tabs */}
+            <div>
+                {['dashboard', 'logs', 'reminders', 'carinfo'].map(v => (
+                    <button key={v} onClick={() => setActiveView(v)}>
+                        {v}
+                    </button>
+                ))}
+            </div>
+
+            {/* Views */}
+            {activeView === 'dashboard' && (
+                <Dashboard
+                    car={car}
+                    logs={carLogs}
+                    reminders={carReminders}
+                    du={du}
+                    vu={vu}
+                    cu={cu}
+                    onAddLog={(type) => {
+                        setLogType(type)
+                        setLogForm({ date: new Date().toISOString().slice(0, 10) })
+                        setEditingLog(null)
+                        setModal('log')
+                    }}
+                    onEditLog={(log) => {
+                        setLogType(log.type)
+                        setLogForm({ ...log })
+                        setEditingLog(log)
+                        setModal('log')
+                    }}
+                    onDeleteLog={deleteLog}
+                    onAddReminder={() => {
+                        setReminderForm({})
+                        setEditingReminder(null)
+                        setModal('reminder')
+                    }}
+                    onEditReminder={(r) => {
+                        setReminderForm({ ...r })
+                        setEditingReminder(r)
+                        setModal('reminder')
+                    }}
+                    onDeleteReminder={deleteReminder}
+                />
+            )}
+
+            {activeView === 'logs' && (
+                <LogList
+                    logs={carLogs}
+                    du={du}
+                    vu={vu}
+                    cu={cu}
+                    onAdd={() => {
+                        setLogType('fillup')
+                        setLogForm({ date: new Date().toISOString().slice(0, 10) })
+                        setEditingLog(null)
+                        setModal('log')
+                    }}
+                    onEdit={(log) => {
+                        setLogType(log.type)
+                        setLogForm({ ...log })
+                        setEditingLog(log)
+                        setModal('log')
+                    }}
+                    onDelete={deleteLog}
+                />
+            )}
+
+            {activeView === 'reminders' && (
+                <Reminders
+                    reminders={carReminders}
+                    latestMi={carLogs
+                        .filter(l => l.miStored != null)
+                        .sort((a, b) => b.miStored - a.miStored)[0]?.miStored}
+                    du={du}
+                    onAdd={() => {
+                        setReminderForm({})
+                        setEditingReminder(null)
+                        setModal('reminder')
+                    }}
+                    onEdit={(r) => {
+                        setReminderForm({ ...r })
+                        setEditingReminder(r)
+                        setModal('reminder')
+                    }}
+                    onDelete={deleteReminder}
+                />
+            )}
+
+            {activeView === 'carinfo' && (
+                <CarInfo
+                    car={car}
+                    logs={carLogs}
+                    onEditCar={() => {
+                        setCarForm({ ...car })
+                        setModal('car')
+                    }}
+                />
+            )}
+
+            {/* Modals */}
+            {modal === 'log' && (
+                <Modal
+                    title={editingLog ? 'Edit Entry' : 'Add Entry'}
+                    onClose={() => setModal(null)}
+                >
+                    <LogForm
+                        logType={logType}
+                        onLogTypeChange={setLogType}
+                        form={logForm}
+                        onFormChange={(field, value) => setLogForm(prev => ({ ...prev, [field]: value }))}
+                        onSave={saveLog}
+                        onCancel={() => setModal(null)}
+                        du={du}
+                        vu={vu}
+                        cu={cu}
+                    />
+                </Modal>
+            )}
+
+            {modal === 'reminder' && (
+                <Modal
+                    title={editingReminder ? 'Edit Reminder' : 'Add Reminder'}
+                    onClose={() => setModal(null)}
+                >
+                    <ReminderForm
+                        form={reminderForm}
+                        onFormChange={(field, value) => setReminderForm(prev => ({ ...prev, [field]: value }))}
+                        onSave={saveReminder}
+                        onCancel={() => setModal(null)}
+                        du={du}
+                    />
+                </Modal>
+            )}
+
+            {modal === 'car' && (
+                <Modal
+                    title='Car Details'
+                    onClose={() => setModal(null)}
+                >
+                    <CarForm
+                        form={carForm}
+                        onFormChange={(field, value) => setCarForm(prev => ({ ...prev, [field]: value }))}
+                        onSave={saveCar}
+                        onCancel={() => setModal(null)}
+                    />
+                </Modal>
+            )}
+
+        </div>
+    )
 }
