@@ -47,8 +47,8 @@ export function LogRow({ log, onEdit, onDelete, du, vu }) { //du = distance unit
                 </div>
                 <div className={styles.detailsRow}>
                     {displayDate && <span className={styles.detail}>{displayDate}</span>}
-                    {displayMileage && <span className={styles.detail}>{displayMileage}</span>}
-                    {displayEfficiency && <span className={styles.detail}>{displayEfficiency}</span>}
+                    {displayMileage && <span className={styles.detail}> | {displayMileage}</span>}
+                    {displayEfficiency && <span className={styles.detail}> | {displayEfficiency}</span>}
                 </div>
             </div>
         

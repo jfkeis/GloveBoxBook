@@ -22,21 +22,37 @@
 
 .titleRow {
     display: flex;
-    align-items: baseline;
-    gap: 10px;
+    align-items: center;
+    gap: 8px;
     flex-wrap: wrap;
 }
 
-.title {
+.name {
     font-size: 14px;
     font-weight: 600;
     color: var(--text-primary);
 }
 
-.cost {
-    font-size: 13px;
+.badge {
+    font-size: 11px;
     font-weight: 600;
-    color: var(--text-secondary);
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+
+.badgeGreen {
+    background: #d4edda;
+    color: #227722;
+}
+
+.badgeYellow {
+    background: #fff3cd;
+    color: #cc7700;
+}
+
+.badgeRed {
+    background: #f8d7da;
+    color: #cc2200;
 }
 
 .detailRow {

@@ -1,8 +1,16 @@
-import { kmToMi, lToGal, round } from '../utils/units'
+import styles from './ReminderRow.module.css'
+
+function fmtDate(d) {
+    if (!d) return ''
+    return new Date(d).toLocaleDateString(undefined, { day: '2-digit', month: 'short', year: 'numeric' })
+}
+
+function fromMi(mi, unit) {
+    return unit === 'km' ? mi * 1.60934 : mi
+}
 
 export function ReminderRow({ reminder, status, du, onEdit, onDelete }) {
-
-    const badgeColor = status.overdue ? 'red' : status.urgent ? 'orange' : 'green'
+    const { distLeft, daysLeft, overdue, urgent } = status
 
     const badgeText = status.overdue
         ? `${Math.abs(Math.round(status.distLeft)).toLocaleString()} ${du} overdue`
@@ -12,25 +20,34 @@ export function ReminderRow({ reminder, status, du, onEdit, onDelete }) {
         ? `${status.daysLeft} days left`
         : 'Scheduled'
 
+    const badgeClass = overdue ? styles.badgeRed : urgent ? styles.badgeYellow : styles.badgeGreen
+
     return (
-        <div>
-            <span>🔔</span>
-            <span>{reminder.name}</span><span style={{ color: badgeColor }}>{badgeText}</span>
-            <button onClick={onEdit}>Edit</button>
-            <button onClick={onDelete}>Delete</button>
-            <div>
-                {reminder.intervalMi && (
-                    <span>Every {Math.round(reminder.intervalMi).toLocaleString()} {du}</span>
-                )}
-                {reminder.lastMi && (
-                    <span>Last at {Math.round(reminder.lastMi).toLocaleString()} {du}</span>
-                )}
-                {reminder.intervalMonths && (
-                    <span>Every {reminder.intervalMonths} months</span>
-                )}
-                {reminder.lastDate && (
-                    <span>Last: {reminder.lastDate}</span>
-                )}
+        <div className={styles.row}>
+            <span className={styles.icon}>🔔</span>
+            <div className={styles.content}>
+                <div className={styles.titleRow}>
+                    <span className={styles.name}>{reminder.name}</span>
+                    <span className={`${styles.badge} ${badgeClass}`}>{badgeText}</span>
+                </div>
+                <div className={styles.detailRow}>
+                    {reminder.intervalMi != null && (
+                        <span className={styles.detail}>Every {Math.round(fromMi(reminder.intervalMi, du)).toLocaleString()} {du}</span>
+                    )}
+                    {reminder.intervalMonths && (
+                        <span className={styles.detail}>· Every {reminder.intervalMonths} months</span>
+                    )}
+                    {reminder.lastMi != null && (
+                        <span className={styles.detail}>· Last at {Math.round(fromMi(reminder.lastMi, du)).toLocaleString()} {du}</span>
+                    )}
+                    {reminder.lastDate && (
+                        <span className={styles.detail}>· Last: {fmtDate(reminder.lastDate)}</span>
+                    )}
+                </div>
+            </div>
+            <div className={styles.actions}>
+                <button className={styles.actionBtn} onClick={onEdit}>Edit</button>
+                <button className={`${styles.actionBtn} ${styles.actionBtnDelete}`} onClick={onDelete}>Delete</button>
             </div>
         </div>
     )
