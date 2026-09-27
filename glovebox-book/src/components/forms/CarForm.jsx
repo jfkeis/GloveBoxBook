@@ -1,6 +1,6 @@
 import React from 'react'
 
-export function CarForm({ form, onFormChange, onSave, onCancel}) {
+export function CarForm({ form, onFormChange, onSave, onCancel, onDelete }) {
     return (
         <div>
             <label>Name</label>
@@ -61,7 +61,7 @@ export function CarForm({ form, onFormChange, onSave, onCancel}) {
             <div>
                 <button onClick={onSave}>Save</button>
                 <button onClick={onCancel}>Cancel</button>
-            </div>
+                <button onClick={onDelete} style={{ color: 'red', borderColor: 'red' }}>Delete Car</button>            </div>
         </div>
     )
 }

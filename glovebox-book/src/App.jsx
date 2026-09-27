@@ -92,6 +92,7 @@ export default function App() {
     }
 
     function deleteLog(id) {
+        if (!confirm('Delete this entry?')) return
         setLogs(prev => prev.filter(l => l.id !== id))
     }
 
@@ -119,6 +120,7 @@ export default function App() {
     }
 
     function deleteReminder(id) {
+        if (!confirm('Delete this reminder?')) return
         setReminders(prev => prev.filter(r => r.id !== id))
     }
 
@@ -143,6 +145,15 @@ export default function App() {
         setModal('car')
     }
 
+    function deleteCar(id) {
+        if (!confirm('Delete this car and all its logs and reminders? This cannot be undone.')) return
+        setCars(prev => prev.filter(c => c.id !== id))
+        setLogs(prev => prev.filter(l => l.carId !== id))
+        setReminders(prev => prev.filter(r => r.carId !== id))
+        setActiveCar(cars.find(c => c.id !== id)?.id || null)
+        setModal(null)
+    }
+
     return (
         <div className={styles.app}>
 
@@ -165,13 +176,18 @@ export default function App() {
 
             {/* Nav tabs */}
             <div className={styles.navTabs}>
-                {['dashboard', 'logs', 'reminders', 'carinfo'].map(v => (
+                {[
+                    { key: 'dashboard', label: 'Dashboard' },
+                    { key: 'logs',      label: 'Logs' },
+                    { key: 'reminders', label: 'Reminders' },
+                    { key: 'carinfo',   label: 'Car Info' },
+                ].map(tab => (
                     <button
-                        key={v}
-                        className={`${styles.navTab} ${activeView === v ? styles.navTabActive : ''}`}
-                        onClick={() => setActiveView(v)}
+                        key={tab.key}
+                        className={`${styles.navTab} ${activeView === tab.key ? styles.navTabActive : ''}`}
+                        onClick={() => setActiveView(tab.key)}
                     >
-                        {v}
+                        {tab.label}
                     </button>
                 ))}
             </div>
@@ -311,6 +327,7 @@ export default function App() {
                         onFormChange={(field, value) => setCarForm(prev => ({ ...prev, [field]: value }))}
                         onSave={saveCar}
                         onCancel={() => setModal(null)}
+                        onDelete={() => deleteCar(activeCar)}
                     />
                 </Modal>
             )}

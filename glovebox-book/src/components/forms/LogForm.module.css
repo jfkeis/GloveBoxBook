@@ -1,0 +1,79 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.typeSelector {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.typeBtn {
+    padding: 5px 12px;
+    font-size: 12px;
+    border-radius: 20px;
+}
+
+.typeBtnActive {
+    background: linear-gradient(to bottom, #4a8ae8 0%, #2468c8 100%);
+    color: white;
+    border-color: #1a54aa;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.inputRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.unitToggle {
+    flex-shrink: 0;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    background: linear-gradient(to bottom, #4a8ae8 0%, #2468c8 100%);
+    color: white;
+    border-color: #1a54aa;
+    white-space: nowrap;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+    padding-top: 4px;
+}
+
+.saveBtn {
+    flex: 1;
+    padding: 8px;
+    font-weight: 700;
+    background: linear-gradient(to bottom, #4a8ae8 0%, #2468c8 100%);
+    color: white;
+    border-color: #1a54aa;
+}
+
+.saveBtn:hover {
+    background: linear-gradient(to bottom, #5a9af8 0%, #3478d8 100%);
+}
+
+.cancelBtn {
+    padding: 8px 16px;
+    color: var(--text-secondary);
+}
