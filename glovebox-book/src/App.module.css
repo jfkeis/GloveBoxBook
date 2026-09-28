@@ -16,10 +16,10 @@
     border-radius: 20px;
     font-weight: 600;
     font-size: 13px;
+    border: 1.5px solid var(--border);
 }
 
 .carTabActive {
-    color: white;
     border-color: transparent;
 }
 

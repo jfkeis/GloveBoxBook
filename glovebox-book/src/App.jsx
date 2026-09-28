@@ -8,7 +8,7 @@ import { Modal } from './components/Modal'
 import { LogForm } from './components/forms/LogForm'
 import { ReminderForm } from './components/forms/ReminderForm'
 import { CarForm } from './components/forms/CarForm'
-import { toMi, toGal, toUSD } from './utils/units'
+import { toMi, toGal, toUSD, getContrastText } from './utils/units'
 import styles from './App.module.css'
 
 const DEFAULT_CARS = [
@@ -163,6 +163,12 @@ export default function App() {
                     <button
                         key={c.id}
                         className={`${styles.carTab} ${activeCar === c.id ? styles.carTabActive : ''}`}
+                        style={activeCar === c.id ? { 
+                            background: c.color, 
+                            border: `1.5px solid ${getContrastText(c.color) === '#1a2433' ? '#b0bec9' : c.color}`,
+                            color: getContrastText(c.color),
+                            boxShadow: `0 2px 8px rgba(0,0,0,0.2)`
+                        } : {}}
                         onClick={() => {
                             setActiveCar(c.id)
                             setActiveView('dashboard')
