@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { LogRow } from "./LogRow"
+import styles from './LogList.module.css'
 
 const FILTERS = [
   { key: 'all', label: 'All' },
@@ -17,27 +18,38 @@ export function LogList({ logs, du, vu, cu, onAdd, onEdit, onDelete }) {
     : logs.filter(l => l.type === filter)
 
   return (
-    <div>
-        <button onClick={onAdd}>+ Add</button>
-        
-        {FILTERS.map(f => (
-            <button key={f.key} onClick={() => setFilter(f.key)}>
-                {f.label}
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <div className={styles.filters}>
+          {FILTERS.map(f => (
+            <button
+              key={f.key}
+              className={`${styles.filterBtn} ${filter === f.key ? styles.filterBtnActive : ''}`}
+              onClick={() => setFilter(f.key)}
+            >
+              {f.label}
             </button>
-        ))}
-        {filtered.length === 0 && <p>No entries yet.</p>}
+          ))}
+        </div>
+        <button className={styles.addBtn} onClick={onAdd}>+ Add</button>
+      </div>
 
-        {filtered.map(log => (
-        <LogRow
-            key={log.id}
-            log={log}
-            du={du}
-            vu={vu}
-            onEdit={() => onEdit(log)}
-            onDelete={() => onDelete(log.id)}
-        />
-        ))}
-    </div>
+      {filtered.length === 0
+        ? <div className={styles.empty}>No entries yet.</div>
+        : <div className={styles.list}>
+            {filtered.map(log => (
+                <LogRow
+                    key={log.id}
+                    log={log}
+                    du={du}
+                    vu={vu}
+                    onEdit={() => onEdit(log)}
+                    onDelete={() => onDelete(log.id)}
+                />
+            ))}
+        </div>
+        }
+      </div>
   )
 }
 

@@ -1,0 +1,61 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filters {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.filterBtn {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.filterBtnActive {
+    background: linear-gradient(to bottom, #4a8ae8 0%, #2468c8 100%);
+    color: white;
+    border-color: #1a54aa;
+}
+
+.filterBtnInactive {
+    background: linear-gradient(to bottom, #5a9af8, #3478d8 100%);
+    color: white;
+}
+
+.filterBtnActive:hover {
+    background: linear-gradient(to bottom, #5a9af8 0%, #3478d8 100%);
+    color: white;
+    opacity: 0.9;
+}
+
+.addBtn {
+    padding: 6px 14px;
+    font-weight: 600;
+}
+
+.list {
+    background: var(--bg-glass);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 4px 16px;
+    box-shadow: var(--shadow-glass);
+}
+
+.empty {
+    padding: 32px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 14px;
+}

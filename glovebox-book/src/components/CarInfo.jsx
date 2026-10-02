@@ -1,6 +1,7 @@
 import React from "react"
 import { StatCard } from "./StatCard"
 import { usdToEur, galToL, round, displayCost, displayVolume } from '../utils/units'
+import styles from './CarInfo.module.css'
 
 export function CarInfo({ car, logs, onEditCar }) {
     const totalFuelCost = logs
@@ -17,24 +18,30 @@ export function CarInfo({ car, logs, onEditCar }) {
         .length
 
     return(
-        <div>
-            {/* Car details */}
-            <div>
-                <p>{car.name}</p>
-                <p>{car.year} {car.make} {car.model}</p>
-                {car.plate && <p>{car.plate}</p>}
-                <button onClick={onEditCar}>Edit car info</button>
+        <div className={styles.container}>
+            <div className={styles.carCard}>
+                <div
+                    className={styles.carIcon}
+                    style={{ background: car.color }}
+                >
+                </div>
+                <div className={styles.carDetails}>
+                    <p className={styles.carName}>{car.name}</p>
+                    <p className={styles.carSubtitle}>
+                        {[car.year, car.make, car.model].filter(Boolean).join(' ') || 'No details yet'}
+                    </p>
+                    {car.plate && <p className={styles.carSubtitle}>{car.plate}</p>}
+                </div>
+                <button className={styles.editBtn} onClick={onEditCar}>Edit car info</button>
             </div>
 
-            {/* Stats */}
-            <div>
-                <StatCard label="Total fuel cost" value={displayCost(totalFuelCost, car.curUnit)} />
-                <StatCard label="Total maintenance cost" value={displayCost(totalMaintenanceCost, car.curUnit)} />
-                <StatCard label="Total fuel volume" value={displayVolume(totalFuelVolume, car.volUnit)} />
-                <StatCard label="Oil changes" value={totalOilChanges} />
+            <div className={styles.statsGrid}>
+                <StatCard label="Total fuel cost"   value={displayCost(totalFuelCost, car.curUnit)}   color="linear-gradient(135deg, #2468c8 0%, #1244aa 100%)" />
+                <StatCard label="Maintenance cost"  value={displayCost(totalMaintenanceCost, car.curUnit)} color="linear-gradient(135deg, #cc6600 0%, #aa4400 100%)" />
+                <StatCard label="Total fuel volume" value={displayVolume(totalFuelVolume, car.volUnit)} color="linear-gradient(135deg, #1a9a44 0%, #127733 100%)" />
+                <StatCard label="Oil changes"       value={totalOilChanges} color="linear-gradient(135deg, #8844cc 0%, #6633aa 100%)" />
             </div>
         </div>
     )
-    
 }
 

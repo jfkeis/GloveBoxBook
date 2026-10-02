@@ -23,6 +23,10 @@
     border-color: transparent;
 }
 
+.carTabActive:hover {
+    opacity: 0.9;
+}
+
 .navTabs {
     display: flex;
     gap: 4px;

@@ -52,7 +52,7 @@ export function displayCost(usd, curUnit) {
 
 export function displayVolume(gal, volUnit) {
     const value = volUnit === 'L' ? galToL(gal) : gal
-    return `${round(value, volUnit === 'L' ? 2 : 3)} ${volUnit}`
+    return `${round(value, volUnit === 'L' ? 2 : 1)} ${volUnit}`
 }
 
 export function displayEfficiency(mpg) {
